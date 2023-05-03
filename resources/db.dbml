@@ -1,0 +1,44 @@
+Project HotelBooking {
+database_type: 'MySQL'
+Note: '''
+# Hotel Booking Database
+This database is used for storing data related to hotels and bookings made by customers.
+It contains two tables:
+- hotels: stores information about hotels including their name, location, number of total rooms, facilities, and price per night.
+- bookings: stores information about bookings made by customers including hotel id, customer name, check-in and check-out dates, number of rooms, and total price.
+'''
+}
+
+Table hotels {
+id int [pk]
+name varchar
+location varchar
+total_rooms int
+facilities text
+price_per_night int
+created_at timestamp [note: 'time when data inserted']
+
+Indexes {
+(location) [name:'hotel_location']
+id [unique]
+}
+}
+
+Table bookings {
+id int [pk]
+hotel_id int [not null]
+customer_name varchar
+check_in_date date
+check_out_date date
+num_rooms int
+total_price int
+created_at timestamp [note: 'time when data inserted']
+
+Indexes {
+(check_in_date) [name:'booking_check_in']
+(check_out_date) [name:'booking_check_out']
+id [unique]
+}
+}
+
+Ref: hotels.id < bookings.hotel_id [delete: cascade, update: cascade]
